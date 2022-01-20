@@ -1,27 +1,37 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Webius Blog</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
+
 <body>
-<header>
-    <h1><a href="{% url 'home' %}">Webius blog</a></h1>
+    <header>
+        <h1><a href="{% url 'home' %}">Webius blog</a></h1>
+        <h2 style="float: right;">
+            <a href="{% url 'post_new'%}">Yangi post yozish</a>
+        </h2>
+    </header>
+    <hr>
+    {% if user.is_authenticated %}
+    <p>Xush kelibsiz, {{user.username}}</p>
+    <p><a href="{% url 'logout' %}">CHiqib ketish</a></p>
+    {% else %}
+    <p>
+        <a href="{% url 'login' %}">Kirish</a> |
+        <a href="{% url 'signup' %}">Ro'yhatdan o'tish</a>
+    </p>
+    {% endif %}
+    <hr>
+    <div>
+        {% block content %}
 
-</header>
-<hr>
-<div>
-    {% block content %}
+        {%endblock content %}
+    </div>
 
-    {%endblock content %}
-</div>
-
-<footer>
-    <h2>
-        <a href="{% url 'post_new'%}">Yangi post yozish</a>
-    </h2>
-</footer>
 </body>
+
 </html>
